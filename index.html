@@ -1,0 +1,414 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E+ v25</title><style>
+:root{font-family:Inter,system-ui,Arial,sans-serif;color:#1b2d4a;background:#f4f7fc}*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}aside{position:fixed;width:245px;inset:0 auto 0 0;background:#152b51;color:white;padding:27px 14px}.brand{font-size:23px;font-weight:800;margin:0 12px 28px}.brand small{display:block;font-size:12px;color:#b9c8df;font-weight:400;margin-top:7px}.nav{display:block;width:100%;border:0;border-radius:10px;text-align:left;background:none;color:#dce7f8;padding:14px;margin:4px 0}.nav.active,.nav:hover{background:#315282}main{margin-left:245px;padding:30px;max-width:1550px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}h1{margin:0;font-size:27px}h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:0 0 9px}.muted{color:#687b98;font-size:13px;line-height:1.55}.card{background:white;border:1px solid #e0e8f3;border-radius:17px;padding:22px;margin-bottom:16px;box-shadow:0 5px 20px #1b385006}.hero{background:linear-gradient(115deg,#1b3a71,#426caa);color:white;border-radius:18px;padding:26px;margin-bottom:17px}.hero p{color:#e3edff}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.two{grid-template-columns:1.5fr 1fr}.stat{font-size:26px;font-weight:800;color:#254d86;margin-top:9px}.btn{border:0;background:#2c5fa8;color:white;border-radius:10px;padding:11px 15px;font-weight:700}.btn.alt{background:#eaf1fb;color:#24528b}.btn.warn{background:#fff1e4;color:#905b19}.btn.danger{background:#fff0f0;color:#aa3636}.btn.small{font-size:12px;padding:8px 10px}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.hidden{display:none!important}.field{margin-bottom:15px}label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}input,textarea{width:100%;border:1px solid #cbd7e8;padding:10px 12px;border-radius:9px;background:white;color:#233b5d}textarea{resize:vertical;min-height:120px}.chip{font-size:12px;color:#275389;background:#e8f1fd;padding:5px 9px;border-radius:20px;font-weight:700}.task{border:1px solid #e4ebf4;border-radius:12px;padding:15px;margin:10px 0;background:#fff}.task.completed{background:#f4faf8;border-color:#cce9dc}.task.pending{border-color:#f2cda1}.topicname{font-size:15px;font-weight:750;white-space:normal;overflow-wrap:anywhere;line-height:1.5;margin:7px 0}.subj{font-size:12px;font-weight:800;color:#295b9d}.task-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.task-actions button{font-size:12px}.progress{height:11px;background:#e8eef7;border-radius:20px;overflow:hidden}.progress>div{height:100%;background:#35a989}.timer{font-size:38px;font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:1px;color:#234b81;margin:15px 0}.day{border:1px solid #e2e9f3;border-radius:13px;padding:13px;background:#fff;min-width:0}.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.week .topicname{font-size:12px}.week .task{padding:9px;margin:7px 0}.week .task-actions{display:none}.week .subj{font-size:11px}.tree{margin:9px 0;padding:0;list-style:none}.tree li{border-left:2px solid #d6e3f5;padding:7px 9px;margin:3px 0;background:#f5f8fe;border-radius:0 7px 7px 0;font-size:13px;overflow-wrap:anywhere}.tree .num{font-weight:800;color:#295b9d;margin-right:8px}.weight{width:100px}.summary{background:#edf5ff;padding:14px;border-radius:11px;margin:12px 0}.barrow{margin:14px 0}.barrow .progress{margin-top:7px}.mini{font-size:12px;color:#71819a}.empty{padding:24px;background:#f4f7fb;border-radius:10px;color:#6c7d95;text-align:center}.day-row{padding:11px 0;border-bottom:1px solid #e8edf5}.footer{font-size:12px;color:#8090a5;margin-top:25px}@media(max-width:1100px){.week{grid-template-columns:repeat(3,1fr)}}@media(max-width:850px){aside{position:static;width:100%;padding:13px;}.brand{margin:3px 8px 12px}.menu{display:flex;overflow-x:auto}.nav{white-space:nowrap;width:auto;padding:10px}main{margin:0;padding:15px}.grid,.two{grid-template-columns:1fr}.week{grid-template-columns:repeat(2,minmax(0,1fr))}.top{align-items:start}h1{font-size:23px}}@media(max-width:430px){.week{grid-template-columns:1fr}}
+.calendar-controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:20px 0}.calendar-controls select{width:auto;min-width:125px;padding:9px;border:1px solid #cbd5e1;border-radius:9px;background:white}.calendar-scroll{overflow-x:auto}.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(105px,1fr));gap:6px;min-width:735px}.cal-head{text-align:center;font-weight:750;padding:10px;color:#52617a}.cal-day{min-height:148px;border:1px solid #dce5f1;border-radius:11px;background:#fff;padding:9px;text-align:left;color:#26364e;cursor:pointer;display:flex;flex-direction:column;gap:5px}.cal-day:hover,.cal-day.selected{border-color:#3567a5;box-shadow:0 0 0 2px #d5e7ff}.cal-day.outside{background:#f0f3f8;cursor:default}.cal-day.today{border-color:#396bc2}.cal-num{font-weight:800}.cal-done{background:#e2f7ea;color:#11663b;border-radius:6px;padding:3px 5px;font-size:11px;font-weight:750}.cal-item{font-size:11px;line-height:1.3;border-top:1px solid #e8edf5;padding-top:4px;overflow-wrap:anywhere}.cal-item strong{display:block}.cal-expand{border:0;background:#e8f0ff;color:#24518d;padding:5px 7px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left}.cal-day.expanded{min-height:148px}.cal-status{font-size:10px;color:#4c617d}.cal-total{margin-top:auto;font-size:11px;font-weight:800;color:#315d9e}.cal-detail{margin-top:17px;padding:16px;border-radius:12px;background:#f3f7fd}.cal-detail .task{margin-top:10px}.cal-note{font-size:12px;color:#5d6980;margin:10px 0} .app-dialog{position:fixed;inset:0;z-index:99999;background:rgba(12,23,45,.58);display:flex;align-items:center;justify-content:center;padding:20px}.app-dialog.hidden{display:none}.dialog-panel{width:min(440px,100%);background:#fff;padding:25px;border-radius:16px;box-shadow:0 18px 70px #101f3855}.dialog-panel p{margin:18px 0 24px;line-height:1.5}.month-subject{background:#f7faff;border:1px solid #dce6f5;border-radius:12px;padding:16px;margin:12px 0}.month-topic{padding:7px 0;border-bottom:1px solid #e6edf5}.month-topic:last-child{border:0}.schedule-date{font-size:12px;color:#546780;margin-top:3px}.history-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:14px 0}.history-stat{display:flex;flex-direction:column;gap:7px;background:#edf4ff;border:1px solid #dce7f7;border-radius:12px;padding:16px}.history-stat strong{font-size:25px;color:#1e467e}.history-stat .muted{font-size:13px}</style></head><body><aside><div class="brand">✦ E+<small>Estude com direção</small></div><div class="menu"><button class="nav active" data-page="inicio">⌂ Início</button><button class="nav" data-page="cronograma">▦ Cronograma</button><button class="nav" data-page="historico">◴ Histórico</button><button class="nav" data-page="materias">▤ Matérias e tópicos</button><button class="nav" data-page="tempo">◷ Disponibilidade</button><button class="nav" data-page="graficos">▥ Gráficos</button><button class="nav" data-page="ciclos">◎ Ciclos</button><button class="nav" data-page="backup">⇩ Backup</button></div></aside><main><div class="top"><div><h1 id="title">Meu painel</h1><div class="muted" id="subtitle">Metas do dia e cronômetro de estudo</div></div><span class="chip">E+ v25</span></div>
+<section class="page" id="inicio"><div class="hero"><h1>Seu estudo, uma meta de cada vez.</h1><p>Veja os assuntos completos do dia, acompanhe seu tempo e registre o que concluiu.</p></div><div class="grid" id="cards"></div><div class="grid two" style="margin-top:16px"><div class="card"><div class="row between wrap"><h2>Metas de hoje</h2><span class="chip" id="todayName"></span><span class="chip" id="todayDate"></span></div><div id="todaySummary"></div><div id="todayTasks"></div></div><div class="card"><h2>⏱ Cronômetro de estudo</h2><p class="muted">Selecione uma meta abaixo para medir o tempo dedicado àquele assunto.</p><div id="timerTarget" class="summary">Nenhuma meta selecionada</div><div class="timer" id="clock">00:00:00</div><div class="row wrap"><button class="btn" id="startBtn" onclick="toggleTimer()">▶ Iniciar</button><button class="btn alt" onclick="resetTimer()">↺ Zerar</button><button class="btn" onclick="finishStudy()">✓ Concluir estudo</button></div><p class="mini">O tempo é registrado ao clicar em Concluir estudo. Pausar apenas interrompe a contagem. O cronômetro também funciona enquanto você consulta outras abas.</p></div></div></section>
+<section class="page hidden" id="materias"><div class="card"><h2>Matérias, pesos e tópicos do edital</h2><p class="muted">Cole o conteúdo programático numerado, por exemplo, <b>1.0 Direito constitucional 1.1 Direitos fundamentais 1.2 Direitos sociais 2.0 Organização do Estado</b>. O sistema identifica a hierarquia e organiza verticalmente, preservando a ordem e o texto integral de cada tópico.</p><div id="subjectList"></div></div><div class="card"><h2>Adicionar matéria</h2><div class="grid two"><div class="field"><label>Nome da matéria</label><input id="newName" placeholder="Ex.: Direito Tributário"></div><div class="field"><label>Peso (1 a 5)</label><input id="newWeight" type="number" min="1" max="5" value="5"></div></div><div class="field"><label>Cole os tópicos do edital</label><textarea id="newSyllabus" placeholder="1.0 Sistema Tributário Nacional 1.1 Princípios tributários 1.2 Limitações ao poder de tributar 2.0 Obrigação tributária 2.1 Fato gerador"></textarea></div><button class="btn alt" onclick="previewNew()">Organizar tópicos</button><div id="newPreview"></div><button class="btn" onclick="addSubject()" style="margin-top:12px">+ Salvar matéria</button></div></section>
+<section class="page hidden" id="tempo"><div class="card"><h2>Configurar disponibilidade</h2><p class="muted">Defina suas horas semanais e quantas matérias deseja estudar por dia. O tempo diário será dividido igualmente entre as matérias daquele dia, respeitando os pesos na frequência semanal.</p><div class="grid two"><div class="field"><label>Quantidade de horas semanais</label><div class="row"><button class="btn alt" onclick="adjustWeekly(-1)">−</button><input id="weeklyHours" type="number" min="1" max="100" step="1" style="max-width:120px" onchange="updateAvailabilityPreview()"><button class="btn alt" onclick="adjustWeekly(1)">+</button><span class="muted">horas</span></div></div><div class="field"><label>Quantidade de matérias por dia</label><div class="row"><button class="btn alt" onclick="adjustSession(-1)">−</button><input id="sessionMinutes" type="number" min="1" max="12" step="1" style="max-width:120px" onchange="updateAvailabilityPreview()"><button class="btn alt" onclick="adjustSession(1)">+</button><span class="muted">matérias</span></div></div></div><h3>Dias disponíveis</h3><p class="muted">Selecione os dias nos quais deseja distribuir suas metas.</p><div id="timeFields"></div><div class="summary" id="availabilityPreview"></div><button class="btn" onclick="saveTime()">Salvar disponibilidade</button></div></section>
+<section class="page hidden" id="cronograma"><div class="card"><div class="row between wrap"><div><h2>Cronograma semanal</h2><p class="muted">Matéria e texto completo do tópico, sem cortes. Distribuição baseada nos pesos, horas semanais e quantidade de matérias por dia.</p></div><div class="row wrap"><button class="btn alt" onclick="newCycle()">＋ Iniciar novo ciclo de estudos</button><button class="btn" onclick="generate()">↻ Gerar / recalcular</button></div></div><div class="row between wrap" style="margin:15px 0"><button class="btn alt small" id="prevWeekButton" onclick="shiftScheduleWeek(-1)">‹ Semana anterior</button><strong id="scheduleWeekTitle"></strong><div class="row wrap"><button class="btn alt small" onclick="scheduleThisWeek()">Semana atual</button><button class="btn alt small" id="nextWeekButton" onclick="shiftScheduleWeek(1)">Prévia da próxima semana ›</button></div></div><div id="week"></div></div><div class="card"><h2>Metas detalhadas por dia</h2><div id="fullSchedule"></div></div></section>
+<section class="page hidden" id="graficos"><div class="grid" id="chartCards"></div><div class="card"><h2>Evolução diária — tempo estudado</h2><div id="dailyChart"></div></div><div class="card"><h2>Conclusão de metas por matéria</h2><div id="subjectChart"></div></div><div class="card"><h2>Tempo registrado por matéria</h2><div id="timeChart"></div></div></section><section class="page hidden" id="ciclos"><div class="card"><div class="row between wrap"><div><h2>Meus ciclos de estudo</h2><p class="muted">Cada ciclo guarda suas matérias, disponibilidade, cronograma, evolução e histórico de forma independente. Escolha qual deseja manter ativo.</p></div><button class="btn" onclick="newCycle()">＋ Iniciar novo ciclo</button></div><div id="cycleList"></div></div></section><section class="page hidden" id="backup"><div class="card"><h2>Backup e restauração</h2><p class="muted">Proteja seus ciclos de estudo exportando uma cópia completa para guardar no computador, em um pendrive ou na nuvem. Os arquivos de backup não são enviados a nenhum servidor.</p><div class="grid two" style="margin-top:20px"><div class="card" style="background:#f7faff"><h3>↓ Exportar backup</h3><p class="muted">Salva todos os ciclos, matérias, tópicos, cronogramas, metas, tempos e históricos em um arquivo JSON.</p><button class="btn" onclick="exportBackup()">Exportar backup completo</button></div><div class="card" style="background:#f7faff"><h3>↑ Restaurar backup</h3><p class="muted">Selecione um backup do E+. Antes da substituição, você verá a quantidade de ciclos e precisará confirmar a operação.</p><input id="backupFile" type="file" accept=".json,application/json" style="max-width:100%;margin:8px 0 12px" onchange="updateBackupSelection()"><p class="mini" id="backupSelection">Nenhum arquivo selecionado.</p><button class="btn alt" onclick="restoreBackup()">Restaurar backup selecionado</button></div></div><div class="card" style="background:#fff7ed;border-color:#f5d9b4;margin-top:18px"><strong>Importante</strong><p class="mini">A restauração substitui todos os ciclos e registros atuais pelos dados contidos no arquivo. Exporte um backup dos dados atuais antes de restaurar outro. O backup contém seu histórico de estudos: guarde-o em local seguro.</p></div><p class="mini" id="backupStatus" role="status" aria-live="polite"></p></div></section><section class="page hidden" id="historico"><div class="card"><h2>Histórico de estudos</h2><p class="muted">O calendário e os totais exibem apenas metas concluídas e tópicos marcados como não finalizados, nas datas do cronograma. Sessões sem esses status não entram no histórico.</p><div id="historySummary"></div><div class="calendar-controls"><button class="btn alt small" onclick="shiftHistoryMonth(-1)">‹ Anterior</button><label for="historyMonth">Mês</label><select id="historyMonth" onchange="changeHistoryMonth(this.value)"></select><label for="historyYear">Ano</label><select id="historyYear" onchange="changeHistoryYear(this.value)"></select><button class="btn alt small" onclick="shiftHistoryMonth(1)">Próximo ›</button><button class="btn small" onclick="historyToday()">Mês atual</button></div><div class="calendar-scroll"><div id="historyCalendar"></div></div><div id="historyDayDetails"></div><h3 style="margin-top:24px">Registros do mês</h3><div id="historyList"></div></div></section><p class="footer">Protótipo local: dados salvos somente neste navegador. Não há login nem sincronização entre dispositivos. Cronograma navegável por semanas, com datas vinculadas ao histórico. Histórico persistente no navegador.</p></main><div id="appDialog" class="app-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="dialogText"><div class="dialog-panel"><h3>E+</h3><p id="dialogText"></p><div class="row" style="justify-content:flex-end"><button class="btn alt" id="dialogCancel">Cancelar</button><button class="btn" id="dialogOK">OK</button></div></div></div><div class="app-dialog hidden" id="cycleDialog" role="dialog" aria-modal="true" aria-labelledby="cycleDialogTitle"><div class="dialog-panel"><h2 id="cycleDialogTitle">Nome do ciclo</h2><p id="cycleDialogHelp">Dê um nome ao seu cronograma.</p><label for="cycleNameInput">Nome obrigatório</label><input id="cycleNameInput" type="text" maxlength="90" placeholder="Ex.: Ciclo concurso Bacen" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;margin:8px 0"><p id="cycleNameError" style="display:none;color:#b91c1c;margin:4px 0">Informe um nome para continuar.</p><div class="row" style="justify-content:flex-end;margin-top:20px"><button class="btn alt" id="cycleCancel">Cancelar</button><button class="btn" id="cycleAccept">Salvar ciclo</button></div></div></div><script>
+const KEY='metaconcursos_v6';const weekdays=['Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'];const abbreviations=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];const samples=[{id:1,name:'Direito Constitucional',weight:5,syllabus:'1.0 Constituição: conceito e classificação\n1.1 Poder constituinte\n1.2 Direitos e garantias fundamentais\n1.2.1 Direitos individuais e coletivos\n1.2.2 Direitos sociais\n2.0 Organização do Estado\n2.1 Administração pública'},{id:2,name:'Português',weight:4,syllabus:'1.0 Interpretação de textos\n1.1 Coesão e coerência\n2.0 Morfossintaxe\n2.1 Concordância verbal\n2.2 Concordância nominal\n2.3 Regência verbal e nominal'},{id:3,name:'Direito Administrativo',weight:3,syllabus:'1.0 Administração pública\n1.1 Princípios administrativos\n1.2 Poderes administrativos\n2.0 Atos administrativos\n2.1 Elementos e atributos\n2.2 Anulação, revogação e convalidação'}];
+let state;try{state=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!state||!Array.isArray(state.subjects))state={subjects:samples,minutes:[120,120,120,120,120,60,0],tasks:[],history:[]};state.history??=[];state.tasks??=[];state.dailyPlans??={};state.weekTasks??={};state.planWeekStart??=null;state.tasks.forEach((t,i)=>{t.order??=i;if(!t.extra)t.baseTopicIndex??=t.topicIndex});state.weeklyHours??=Math.max(1,Math.round((state.minutes||[]).reduce((a,b)=>a+b,0)/60));state.sessionMinutes??=2;state.studyDays??=[true,true,true,true,true,false,false];const CYCLES_KEY='eplus_cycles_v15';let cycleStore;try{cycleStore=JSON.parse(localStorage.getItem(CYCLES_KEY))}catch(e){}if(!cycleStore||!Array.isArray(cycleStore.items))cycleStore={activeId:null,items:[]};
+function cloneData(x){return JSON.parse(JSON.stringify(x))}
+function persistCycleStore(){localStorage.setItem(CYCLES_KEY,JSON.stringify(cycleStore))}
+function activeCycle(){return cycleStore.items.find(c=>c.id===cycleStore.activeId)}
+function snapshotCycle(){const c=activeCycle();if(c){c.data=cloneData(state);c.updatedAt=new Date().toISOString();persistCycleStore()}}
+function initializeCycles(){
+ // Uma lista vazia salva é uma escolha válida do usuário, não um erro.
+ if(!cycleStore.items.length){
+  cycleStore.activeId=null;
+  state=emptyCycleState();
+  localStorage.setItem(KEY,JSON.stringify(state));
+  persistCycleStore();
+  return;
+ }
+ if(!activeCycle())cycleStore.activeId=cycleStore.items[0].id;
+ state=cloneData(activeCycle().data);
+ localStorage.setItem(KEY,JSON.stringify(state));
+ persistCycleStore();
+}
+function emptyCycleState(){return {subjects:[],minutes:[120,120,120,120,120,0,0],tasks:[],history:[],dailyPlans:{},weekTasks:{},planWeekStart:null,weeklyHours:10,sessionMinutes:2,studyDays:[true,true,true,true,true,false,false]}}
+
+if(!localStorage.getItem(CYCLES_KEY)&&!cycleStore.items.length){const id='cycle-'+Date.now();cycleStore.items.push({id,name:state.cycleName||'Ciclo inicial',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),data:cloneData(state)});cycleStore.activeId=id;persistCycleStore()}
+initializeCycles();
+let timer={id:null,seconds:0,running:false,started:0};function save(){if(typeof captureDailyPlan==="function")captureDailyPlan();localStorage.setItem(KEY,JSON.stringify(state));snapshotCycle()}function appModal(message,confirmMode=false){return new Promise(resolve=>{const el=document.getElementById('appDialog'),ok=document.getElementById('dialogOK'),cancel=document.getElementById('dialogCancel');document.getElementById('dialogText').textContent=message;cancel.style.display=confirmMode?'':'none';el.classList.remove('hidden');const finish=v=>{el.classList.add('hidden');ok.onclick=null;cancel.onclick=null;resolve(v)};ok.onclick=()=>finish(true);cancel.onclick=()=>finish(false);ok.focus()})}function showMessage(message){return appModal(message)}function askConfirm(message){return appModal(message,true)}
+function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function fmt(sec){let h=Math.floor(sec/3600),m=Math.floor(sec%3600/60);return h?`${h}h ${String(m).padStart(2,'0')}min`:`${m}min`}function hhmm(sec){return [Math.floor(sec/3600),Math.floor(sec%3600/60),Math.floor(sec%60)].map(x=>String(x).padStart(2,'0')).join(':')}
+function parseTopics(raw){
+  // Uma entrada numerada só começa no início do texto ou depois de espaço/quebra.
+  // Não separam tópicos as quebras de página, linhas soltas, ponto e vírgula ou bullets.
+  const clean=String(raw||'').replace(/\r/g,'\n').replace(/\u00ad/g,'').replace(/\f/g,'\n').replace(/\u00a0/g,' ').replace(/[ \t]+/g,' ').trim();
+  const rx=/(^|\s)(\d+(?:\.\d+)*\.?)(?=\s+[^\s])/g;
+  const hits=[...clean.matchAll(rx)].filter(m=>!(/^\d{4}$/.test(m[2])));
+  if(!hits.length)return clean?[{number:'1',title:clean.replace(/\s+/g,' ').trim(),depth:0}]:[];
+  const out=[];
+  for(let i=0;i<hits.length;i++){
+    const h=hits[i],next=hits[i+1];
+    const number=h[2].replace(/\.$/,'');
+    const title=clean.slice(h.index+h[0].length,next?next.index:clean.length).replace(/\s+/g,' ').trim();
+    if(!title)continue;
+    const depth=number.split('.').length-1;
+    out.push({number,title,depth:Math.min(depth,6)});
+  }
+  return out;
+}function tree(items){return '<ul class="tree">'+items.map(t=>`<li style="margin-left:${Math.min(t.depth,4)*15}px"><span class="num">${esc(t.number)}</span>${esc(t.title)}</li>`).join('')+'</ul>'}function subjects(){return state.subjects.filter(s=>parseTopics(s.syllabus).length)}function cycleNameDialog(initial='',heading='Nome do ciclo de estudos'){
+ return new Promise(resolve=>{const dlg=document.getElementById('cycleDialog'),input=document.getElementById('cycleNameInput'),error=document.getElementById('cycleNameError'),ok=document.getElementById('cycleAccept'),cancel=document.getElementById('cycleCancel');document.getElementById('cycleDialogTitle').textContent=heading;document.getElementById('cycleDialogHelp').textContent='Identifique este cronograma para salvá-lo e retomá-lo quando desejar.';input.value=initial;error.style.display='none';dlg.classList.remove('hidden');const finish=v=>{dlg.classList.add('hidden');ok.onclick=null;cancel.onclick=null;input.onkeydown=null;resolve(v)};ok.onclick=()=>{const name=input.value.trim();if(!name){error.style.display='block';input.focus();return}finish(name)};cancel.onclick=()=>finish(null);input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();ok.click()}if(e.key==='Escape')cancel.click()};input.focus();input.select()})
+}
+async function newCycle(){if(timer.running)pauseTimer();const name=await cycleNameDialog('','Nome do novo ciclo');if(!name)return;save();const current=activeCycle();const newState={subjects:cloneData(state.subjects),minutes:cloneData(state.minutes),tasks:[],history:[],dailyPlans:{},weekTasks:{},planWeekStart:null,weeklyHours:state.weeklyHours,sessionMinutes:state.sessionMinutes,studyDays:cloneData(state.studyDays)};const id='cycle-'+Date.now()+'-'+Math.floor(Math.random()*100000);cycleStore.items.push({id,name,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),data:cloneData(newState)});cycleStore.activeId=id;state=newState;timer={id:null,seconds:0,running:false,started:0};scheduleWeekOffset=0;historyView={year:new Date().getFullYear(),month:new Date().getMonth(),selected:todayKey()};save();render();go('cronograma');showMessage('Ciclo "'+name+'" criado e ativado. Configure as matérias e gere seu cronograma. O ciclo anterior continua salvo.')}
+async function activateCycle(id){if(id===cycleStore.activeId)return;if(timer.running)pauseTimer();save();const selected=cycleStore.items.find(c=>c.id===id);if(!selected)return;cycleStore.activeId=id;state=cloneData(selected.data);state.history??=[];state.tasks??=[];state.dailyPlans??={};state.weekTasks??={};timer={id:null,seconds:0,running:false,started:0};scheduleWeekOffset=0;persistCycleStore();localStorage.setItem(KEY,JSON.stringify(state));render();go('ciclos')}
+async function deleteCycle(id){
+ const target=cycleStore.items.find(c=>c.id===id);
+ if(!target)return;
+ const isActive=id===cycleStore.activeId;
+ const isLast=cycleStore.items.length===1;
+ const message='Excluir definitivamente o ciclo "'+target.name+'"? Todas as matérias, metas, tempos estudados e registros desse ciclo serão apagados deste navegador. Esta ação não pode ser desfeita.'+(isLast?' O aplicativo ficará sem ciclos ativos até você criar outro.':isActive?' Outro ciclo será ativado automaticamente.':'');
+ if(!await askConfirm(message))return;
+ if(timer.running)pauseTimer();
+ if(!isActive)save();
+ cycleStore.items=cycleStore.items.filter(c=>c.id!==id);
+ if(isActive){
+  const next=cycleStore.items[0];
+  cycleStore.activeId=next?next.id:null;
+  state=next?cloneData(next.data):emptyCycleState();
+  state.history??=[];state.tasks??=[];state.dailyPlans??={};state.weekTasks??={};
+  timer={id:null,seconds:0,running:false,started:0};scheduleWeekOffset=0;
+  localStorage.setItem(KEY,JSON.stringify(state));
+ }
+ persistCycleStore();render();
+ await showMessage('Ciclo "'+target.name+'" excluído.'+(isLast?' Nenhum ciclo ativo. Crie um novo na aba Ciclos.':''));
+}
+
+// Backup portável: o armazenamento principal e o conjunto completo de ciclos.
+function updateBackupSelection(){const file=document.getElementById('backupFile').files[0];document.getElementById('backupSelection').textContent=file?`Arquivo: ${file.name} (${Math.ceil(file.size/1024)} KB)`:'Nenhum arquivo selecionado.'}
+function backupPayload(){
+  const store=cloneData(cycleStore);
+  const current=store.items.find(c=>c.id===store.activeId);
+  if(current){current.data=cloneData(state);current.updatedAt=new Date().toISOString()}
+  return {app:'E+',format:'eplus-full-backup',formatVersion:1,exportedAt:new Date().toISOString(),cycleStore:store};
+}
+function exportBackup(){
+  try{
+    const payload=backupPayload();
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
+    const date=new Date();const stamp=[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+    a.href=url;a.download=`E+ backup ${stamp}.json`;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+    document.getElementById('backupStatus').textContent=`Backup preparado: ${payload.cycleStore.items.length} ciclo(s). Guarde o arquivo em local seguro.`;
+  }catch(err){showMessage('Não foi possível exportar o backup: '+err.message)}
+}
+function validateBackup(data){
+  if(!data||data.app!=='E+'||data.format!=='eplus-full-backup'||data.formatVersion!==1)throw Error('Arquivo não reconhecido como backup completo do E+.');
+  const store=data.cycleStore;
+  if(!store||!Array.isArray(store.items)||store.items.length>10000||(store.items.length>0&&typeof store.activeId!=='string'))throw Error('Lista de ciclos inválida.');
+  const ids=new Set();
+  for(const c of store.items){
+    if(!c||typeof c.id!=='string'||!/^cycle-[a-zA-Z0-9-]+$/.test(c.id)||ids.has(c.id)||typeof c.name!=='string'||!c.name.trim())throw Error('Identificação de ciclo inválida ou duplicada.');
+    ids.add(c.id);
+    if(!c.data||!Array.isArray(c.data.subjects)||!Array.isArray(c.data.tasks)||!Array.isArray(c.data.history)||typeof c.data.dailyPlans!=='object'||c.data.dailyPlans===null||Array.isArray(c.data.dailyPlans)||typeof c.data.weekTasks!=='object'||c.data.weekTasks===null||Array.isArray(c.data.weekTasks))throw Error('Dados incompletos no ciclo '+c.name+'.');
+    if(c.data.subjects.length>500||c.data.tasks.length>50000||c.data.history.length>250000)throw Error('Quantidade de registros acima do limite de segurança.');
+     if(!c.data.subjects.every(x=>x&&typeof x.name==='string'&&typeof x.syllabus==='string'))throw Error('Matérias inválidas no ciclo '+c.name+'.');
+  }
+  if(store.items.length&&!ids.has(store.activeId))throw Error('O ciclo ativo do backup não existe.');
+  return store;
+}
+async function restoreBackup(){
+  const input=document.getElementById('backupFile'),file=input.files&&input.files[0];
+  if(!file){await showMessage('Selecione um arquivo JSON de backup antes de restaurar.');return}
+  if(file.size>30*1024*1024){await showMessage('O arquivo é muito grande para este protótipo (limite: 30 MB).');return}
+  let restored;
+  try{restored=validateBackup(JSON.parse(await file.text()))}catch(err){await showMessage('Backup inválido: '+err.message+' Nenhum dado foi alterado.');return}
+  const ok=await askConfirm(`Restaurar ${restored.items.length} ciclo(s) do arquivo "${file.name}"? Todos os ciclos e históricos atuais serão SUBSTITUÍDOS. Esta ação não pode ser desfeita. Recomendamos exportar o backup atual antes de continuar.`);
+  if(!ok)return;
+  if(timer.running)pauseTimer();
+  const nextState=restored.items.length?cloneData(restored.items.find(c=>c.id===restored.activeId).data):emptyCycleState();
+  const oldCycles=localStorage.getItem(CYCLES_KEY),oldState=localStorage.getItem(KEY);
+  try{
+    localStorage.setItem(CYCLES_KEY,JSON.stringify(restored));
+    localStorage.setItem(KEY,JSON.stringify(nextState));
+  }catch(err){
+    try{if(oldCycles===null)localStorage.removeItem(CYCLES_KEY);else localStorage.setItem(CYCLES_KEY,oldCycles);if(oldState===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,oldState)}catch(_){}
+    await showMessage('Não foi possível salvar o backup no navegador. Verifique o espaço disponível.');return;
+  }
+  cycleStore=cloneData(restored);state=nextState;
+  state.history??=[];state.tasks??=[];state.dailyPlans??={};state.weekTasks??={};
+  timer={id:null,seconds:0,running:false,started:0};scheduleWeekOffset=0;
+  input.value='';updateBackupSelection();
+  document.getElementById('backupStatus').textContent=`Restauração concluída: ${cycleStore.items.length} ciclo(s). Ciclo ativo: ${activeCycle()?.name||'Nenhum'}.`;
+  render();await showMessage('Backup restaurado com sucesso! Todos os ciclos do arquivo estão disponíveis na aba Ciclos.');
+}
+function renderCycles(){const el=document.getElementById('cycleList');if(!el)return;if(!cycleStore.items.length){el.innerHTML='<div class="empty">Nenhum ciclo de estudos cadastrado. Clique em <b>Iniciar novo ciclo</b> para começar.</div>';return}el.innerHTML=cycleStore.items.map(c=>{const data=c.id===cycleStore.activeId?state:c.data;const secs=(data.history||[]).filter(e=>e.type==='Estudo').reduce((n,e)=>n+Number(e.seconds||0),0);const done=(data.tasks||[]).filter(t=>t.done).length;return `<div class="card" style="margin-top:13px;background:${c.id===cycleStore.activeId?'#f0f7ff':'#fff'}"><div class="row between wrap"><div><h3>${esc(c.name)} ${c.id===cycleStore.activeId?'<span class="chip">Ativo</span>':''}</h3><p class="mini">${(data.subjects||[]).length} matérias · ${done} metas concluídas · ${studyLabel(secs)} estudados</p><p class="mini">Criado em ${new Date(c.createdAt).toLocaleDateString('pt-BR')}</p></div><div class="row wrap" style="gap:8px"><button class="btn ${c.id===cycleStore.activeId?'alt':''}" ${c.id===cycleStore.activeId?'disabled':''} onclick="activateCycle('${c.id}')">${c.id===cycleStore.activeId?'Ciclo ativo':'Ativar este ciclo'}</button><button class="btn danger small" onclick="deleteCycle('${c.id}')">Excluir ciclo</button></div></div></div>`}).join('')}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!==id));document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===id));const names={inicio:['Meu painel','Metas do dia e cronômetro de estudo'],materias:['Matérias e tópicos','Conteúdo programático hierarquizado'],tempo:['Disponibilidade','Seu tempo de estudo'],cronograma:['Cronograma','Planejamento por assuntos'],graficos:['Gráficos','Sua evolução em números'],historico:['Histórico','Tudo o que você estudou'],ciclos:['Ciclos','Selecione seu planejamento ativo'],backup:['Backup','Exporte e restaure seus ciclos de estudo']};document.getElementById('title').textContent=names[id][0];document.getElementById('subtitle').textContent=names[id][1];render();scrollTo(0,0)}document.querySelectorAll('.nav').forEach(n=>n.onclick=()=>go(n.dataset.page));
+function renderSubjects(){document.getElementById('subjectList').innerHTML=state.subjects.map(s=>`<div class="card" style="background:#fbfcff"><div class="row between wrap"><h3>${esc(s.name)}</h3><button class="btn danger small" onclick="removeSubject(${s.id})">Excluir</button></div><div class="field"><label>Peso</label><input class="weight" type="number" min="1" max="5" value="${Math.max(1,Math.min(5,Number(s.weight)||1))}" onchange="setWeight(${s.id},this.value)"></div><div class="field"><label>Conteúdo programático (editável)</label><textarea id="syllabus-${s.id}" oninput="updatePreview(${s.id})">${esc(s.syllabus)}</textarea></div><button class="btn alt small" onclick="saveSyllabus(${s.id})">Salvar tópicos</button><p class="mini">Prévia hierarquizada — ${parseTopics(s.syllabus).length} tópicos</p><div id="preview-${s.id}">${tree(parseTopics(s.syllabus))}</div></div>`).join('')}function setWeight(id,v){let s=state.subjects.find(x=>x.id===id);if(s){s.weight=Math.max(1,Math.min(5,Number(v)||1));save()}}function updatePreview(id){document.getElementById('preview-'+id).innerHTML=tree(parseTopics(document.getElementById('syllabus-'+id).value))}function saveSyllabus(id){let s=state.subjects.find(x=>x.id===id);if(s){s.syllabus=document.getElementById('syllabus-'+id).value;syncTopics();save();render();showMessage('Tópicos salvos e cronograma atualizado.')}}function previewNew(){document.getElementById('newPreview').innerHTML=tree(parseTopics(document.getElementById('newSyllabus').value))}function addSubject(){let name=document.getElementById('newName').value.trim(),syllabus=document.getElementById('newSyllabus').value.trim();if(!name||!syllabus){showMessage('Informe o nome e os tópicos da matéria.');return}state.subjects.push({id:Date.now(),name,weight:Math.max(1,Math.min(5,Number(document.getElementById('newWeight').value)||5)),syllabus});save();document.getElementById('newName').value='';document.getElementById('newSyllabus').value='';document.getElementById('newPreview').innerHTML='';renderSubjects()}async function removeSubject(id){if(await askConfirm('Excluir esta matéria?')){state.subjects=state.subjects.filter(s=>s.id!==id);save();render()}}
+function renderTime(){document.getElementById('weeklyHours').value=state.weeklyHours;document.getElementById('sessionMinutes').value=state.sessionMinutes;document.getElementById('timeFields').innerHTML=weekdays.map((d,i)=>`<label class="day-row row" style="cursor:pointer"><input type="checkbox" id="day-${i}" ${state.studyDays[i]?'checked':''} style="width:20px" onchange="updateAvailabilityPreview()">${d}</label>`).join('');updateAvailabilityPreview()}
+function adjustWeekly(delta){let el=document.getElementById('weeklyHours');el.value=Math.min(100,Math.max(1,(Number(el.value)||1)+delta));updateAvailabilityPreview()}
+function adjustSession(delta){let el=document.getElementById('sessionMinutes');el.value=Math.min(12,Math.max(1,(Number(el.value)||1)+delta));updateAvailabilityPreview()}
+function getAvailability(){let h=Math.max(1,Math.min(100,Math.round(Number(document.getElementById('weeklyHours').value)||1))),m=Math.max(1,Math.min(12,Math.round(Number(document.getElementById('sessionMinutes').value)||1))),days=weekdays.map((_,i)=>document.getElementById('day-'+i).checked);return {h,m,days}}
+function updateAvailabilityPreview(){let {h,m,days}=getAvailability(),n=days.filter(Boolean).length;document.getElementById('availabilityPreview').textContent=n?`${h} horas semanais em ${n} dias · aproximadamente ${(h/n).toFixed(1)} horas por dia · até ${m} matéria(s) por dia · aproximadamente ${Math.round(h*60/n/Math.min(m,state.subjects.length||1))} minutos por matéria.`:'Selecione ao menos um dia.'}
+function saveTime(){let {h,m,days}=getAvailability();if(!days.some(Boolean)){showMessage('Selecione ao menos um dia.');return}state.weeklyHours=h;state.sessionMinutes=m;state.studyDays=days;save();showMessage('Disponibilidade salva. Gere novamente o cronograma para aplicar as alterações.');renderTime()}
+function logEvent(type,t,seconds=0){
+ const planDate=t.planDate||canonicalTaskDate(t,0);
+ state.history.push({id:Date.now()+Math.random(),date:new Date().toISOString(),planDate,type,subject:t.subject,topic:t.topic,seconds,taskId:t.id});
+}
+function localDay(iso){const d=new Date(iso);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")}function todayKey(){return localDay(new Date().toISOString())}function studyEntries(){return state.history.filter(x=>x.type==="Estudo"&&Number(x.seconds)>0)}function totalStudy(day=null,subject=null,taskId=null){return studyEntries().filter(x=>(!day||localDay(x.date)===day)&&(!subject||x.subject===subject)&&(!taskId||x.taskId===taskId)).reduce((n,x)=>n+Number(x.seconds),0)}function studyLabel(sec){sec=Math.floor(sec);return sec<60?`${sec}s`:fmt(sec)+(sec%60?` ${sec%60}s`:``)}const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let scheduleWeekOffset=0;let historyView={year:new Date().getFullYear(),month:new Date().getMonth(),selected:todayKey()};
+function historyToday(){const d=new Date();historyView.year=d.getFullYear();historyView.month=d.getMonth();historyView.selected=todayKey();renderHistory()}
+function shiftHistoryMonth(delta){const d=new Date(historyView.year,historyView.month+delta,1);historyView.year=d.getFullYear();historyView.month=d.getMonth();historyView.selected=null;renderHistory()}
+function changeHistoryMonth(v){historyView.month=Number(v);historyView.selected=null;renderHistory()}
+function changeHistoryYear(v){historyView.year=Number(v);historyView.selected=null;renderHistory()}
+function selectHistoryDay(k){historyView.selected=k;renderHistory()}
+function dateKeyForWeekday(day){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+day);return localDay(d.toISOString())}
+function weekStart(offset=0){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+offset*7);return d}function weekKey(offset=0){return localDay(weekStart(offset).toISOString())}function dateAtWeek(offset,day){const d=weekStart(offset);d.setDate(d.getDate()+day);return localDay(d.toISOString())}function prettyDate(key){return new Date(key+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'})}function shiftScheduleWeek(n){scheduleWeekOffset=Math.max(-1,Math.min(1,scheduleWeekOffset+n));renderSchedule()}function scheduleThisWeek(){scheduleWeekOffset=0;renderSchedule()}function tasksForWeek(offset=scheduleWeekOffset){
+ const key=weekKey(offset);
+ if(state.planWeekStart===key)return state.tasks;
+ if(state.weekTasks?.[key])return state.weekTasks[key];
+ if(offset<0)return [];
+ // A prévia é somente leitura; não grava metas nem cria histórico fictício.
+ if(offset>0){
+  const source=state.tasks.filter(t=>!t.extra),next=source.map((t,i)=>({...t,id:'preview-'+key+'-'+i,done:false,unfinished:false,seconds:0,extra:false,completedTopicIndex:undefined,order:i,planDate:keyForDayInWeek(key,t.day)}));
+  const progress={};
+  for(const t of [...state.tasks].sort((a,b)=>a.day-b.day||(a.order??0)-(b.order??0)))progress[t.subjectId]=Math.max(progress[t.subjectId]??0,(Number(t.topicIndex)||0)+1);
+  for(const t of next){const ix=progress[t.subjectId]??0,topics=topicList(t.subjectId);t.topicIndex=ix;t.baseTopicIndex=ix;t.topic=topics[ix]?topics[ix].number+' '+topics[ix].title:'Conteúdo programático concluído — sem novo tópico';t.exhausted=!topics[ix];progress[t.subjectId]=ix+1}
+  return next;
+ }
+ return [];
+}
+function rolloverWeek(){
+ const current=weekKey(0);
+ if(!state.planWeekStart){const dated=state.tasks.find(t=>/^\d{4}-\d{2}-\d{2}$/.test(t.planDate||''));if(dated){const d=new Date(dated.planDate+'T12:00:00');d.setDate(d.getDate()-((d.getDay()+6)%7));state.planWeekStart=localDay(d.toISOString())}else state.planWeekStart=current;if(state.planWeekStart===current)return}
+ if(state.planWeekStart===current)return;
+ // Congelar a semana encerrada, sem alterar seus registros.
+ state.weekTasks??={};
+ state.weekTasks[state.planWeekStart]=cloneData(state.tasks);
+ const past=state.planWeekStart;
+ if(past>current){state.tasks=[];state.planWeekStart=current;return}
+ const base=state.tasks.filter(t=>!t.extra);
+ const progress={};
+ for(const t of [...state.tasks].sort((a,b)=>a.day-b.day||(a.order??0)-(b.order??0))){
+  const ix=Number(t.topicIndex)||0;
+  progress[t.subjectId]=Math.max(progress[t.subjectId]??0,ix+(t.unfinished?0:1));
+ }
+ state.tasks=base.map((t,i)=>{
+  const ix=progress[t.subjectId]??0,topics=topicList(t.subjectId);
+  progress[t.subjectId]=ix+1;
+  return {...t,id:Date.now()+i+Math.floor(Math.random()*100000),topicIndex:ix,baseTopicIndex:ix,topic:topics[ix]?topics[ix].number+' '+topics[ix].title:'Conteúdo programático concluído — sem novo tópico',exhausted:!topics[ix],done:false,unfinished:false,review:false,seconds:0,extra:false,order:i,completedTopicIndex:undefined,planDate:keyForDayInWeek(current,t.day)};
+ });
+ state.planWeekStart=current;
+}
+// Uma data ISO (AAAA-MM-DD) identifica cada meta no cronograma e no calendário.
+// A semana corrente usa state.tasks; as demais semanas usam state.weekTasks.
+function canonicalTaskDate(t,weekOffset=0){return dateAtWeek(weekOffset,t.day)}
+function liveTasksForDate(key){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(key))return null;
+  const monday=new Date(key+'T12:00:00');monday.setDate(monday.getDate()-((monday.getDay()+6)%7));
+  const wk=localDay(monday.toISOString()),current=weekKey(0);
+  const pool=wk===state.planWeekStart?state.tasks:state.weekTasks?.[wk];
+  return pool?pool.filter(t=>(t.planDate||keyForDayInWeek(wk,t.day))===key):null;
+}
+function keyForDayInWeek(week,day){const d=new Date(week+'T12:00:00');d.setDate(d.getDate()+day);return localDay(d.toISOString())}
+function captureDailyPlan(){
+  state.dailyPlans??={};
+  const batches=[[state.planWeekStart||weekKey(0),state.tasks],...Object.entries(state.weekTasks||{}).filter(([wk])=>wk!==(state.planWeekStart||weekKey(0)))];
+  for(const [week,tasks] of batches){
+    for(let day=0;day<7;day++){
+      const d=new Date(week+'T12:00:00');d.setDate(d.getDate()+day);
+      const key=localDay(d.toISOString());
+      // Datas passadas são retratos históricos; a semana atual é sempre atualizada.
+      if(key<weekKey(0)&&state.dailyPlans[key])continue;
+      const ts=tasks.filter(t=>t.day===day);
+      if(!ts.length){if(week===weekKey(0))delete state.dailyPlans[key];continue}
+      state.dailyPlans[key]={tasks:ts.map(t=>({id:t.id,subject:t.subject,topic:t.topic,done:!!t.done,unfinished:!!t.unfinished,minutes:t.minutes})),updated:new Date().toISOString()};
+    }
+  }
+}
+function planForDate(key){
+  const live=liveTasksForDate(key);
+  if(key>=weekKey(0)&&live!==null)return live.length?{tasks:live.map(t=>({id:t.id,subject:t.subject,topic:t.topic,done:!!t.done,unfinished:!!t.unfinished,minutes:t.minutes}))}:null;
+  return state.dailyPlans?.[key]|| (live?.length?{tasks:live.map(t=>({id:t.id,subject:t.subject,topic:t.topic,done:!!t.done,unfinished:!!t.unfinished,minutes:t.minutes}))}:null);
+}
+// O histórico usa exclusivamente metas com status efetivamente registrado no cronograma.
+// O dia de referência é a data da meta, não a data em que o botão do cronômetro foi acionado.
+function recordedGoals(key){
+ const plan=planForDate(key);
+ if(!plan)return [];
+ return plan.tasks.filter(t=>t.done||t.unfinished).map(t=>({...t,seconds:historySecondsForGoal(key,t)}));
+}
+function historyDateForEvent(e){
+ if(e.planDate&&/^\d{4}-\d{2}-\d{2}$/.test(e.planDate))return e.planDate;
+ // Compatibilidade com registros antigos: procurar a data da tarefa no planejamento salvo.
+ for(const [day,plan] of Object.entries(state.dailyPlans||{})){
+  if(plan.tasks?.some(t=>String(t.id)===String(e.taskId)))return day;
+ }
+ const t=state.tasks.find(t=>String(t.id)===String(e.taskId));
+ if(t?.planDate)return t.planDate;
+ // Não atribuir uma sessão antiga a um dia sem vínculo comprovado com o cronograma.
+ return null;
+}
+function historySecondsForGoal(key,goal){
+ return studyEntries().filter(e=>String(e.taskId)===String(goal.id)&&historyDateForEvent(e)===key)
+  .reduce((sum,e)=>sum+Number(e.seconds||0),0);
+}
+function confirmedHistoryEntries(){
+ const result=[];
+ for(const e of studyEntries()){
+  const key=historyDateForEvent(e);
+  if(!key)continue;
+  const plan=planForDate(key);
+  const task=plan?.tasks?.find(t=>String(t.id)===String(e.taskId));
+  if(!task||( !task.done&&!task.unfinished))continue;
+  result.push({...e,historyDay:key,subject:task.subject,topic:task.topic});
+ }
+ return result;
+}
+function dayGoalStatus(key){
+ const plan=planForDate(key);
+ if(!plan||!plan.tasks.length)return null;
+ return {done:plan.tasks.filter(t=>t.done).length,total:plan.tasks.length,complete:plan.tasks.every(t=>t.done)};
+}
+function historyTotalForDay(key){return confirmedHistoryEntries().filter(e=>e.historyDay===key).reduce((n,e)=>n+Number(e.seconds),0)}
+let expandedHistoryDays=new Set();
+function toggleHistoryExpansion(key){if(expandedHistoryDays.has(key))expandedHistoryDays.delete(key);else expandedHistoryDays.add(key);renderHistory()}
+function renderHistory(){
+ const month=historyView.month,year=historyView.year,prefix=`${year}-${String(month+1).padStart(2,'0')}`;
+ document.getElementById('historyMonth').innerHTML=MONTHS.map((m,i)=>`<option value="${i}" ${i===month?'selected':''}>${m}</option>`).join('');
+ const years=new Set([year,new Date().getFullYear()]);(state.history||[]).forEach(e=>years.add(new Date(e.date).getFullYear()));Object.keys(state.dailyPlans||{}).forEach(k=>years.add(Number(k.slice(0,4))));for(let y=new Date().getFullYear()-5;y<=new Date().getFullYear()+2;y++)years.add(y);
+ document.getElementById('historyYear').innerHTML=[...years].filter(Number.isFinite).sort((a,b)=>b-a).map(y=>`<option value="${y}" ${y===year?'selected':''}>${y}</option>`).join('');
+ const entries=confirmedHistoryEntries().filter(e=>e.historyDay.startsWith(prefix)),total=entries.reduce((a,e)=>a+Number(e.seconds),0);
+ const datesInMonth=new Set(Object.keys(state.dailyPlans||{}).filter(k=>k.startsWith(prefix)));
+ for(let d=1;d<=new Date(year,month+1,0).getDate();d++)datesInMonth.add(`${prefix}-${String(d).padStart(2,'0')}`);
+ const completeDays=[...datesInMonth].filter(k=>dayGoalStatus(k)?.complete).length;
+ document.getElementById('historySummary').innerHTML=`<div class="history-stats"><div class="history-stat"><span class="muted">Tempo estudado em ${MONTHS[month].toLowerCase()}</span><strong>${studyLabel(total)}</strong></div><div class="history-stat"><span class="muted">Dias com todas as metas concluídas</span><strong>★ ${completeDays}</strong></div></div><p class="cal-note">O tempo corresponde às sessões cronometradas e registradas em metas concluídas ou tópicos não finalizados. Concluir uma meta sem registrar tempo não acrescenta horas ao total. ★ indica que todas as metas do dia foram concluídas.</p>`;
+ const first=new Date(year,month,1),offset=(first.getDay()+6)%7,days=new Date(year,month+1,0).getDate();let cells=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map(x=>`<div class="cal-head">${x}</div>`);
+ for(let i=0;i<offset;i++)cells.push('<div class="cal-day outside" aria-hidden="true"></div>');
+ for(let d=1;d<=days;d++){
+  const key=`${prefix}-${String(d).padStart(2,'0')}`,goals=recordedGoals(key),status=dayGoalStatus(key),sec=historyTotalForDay(key);
+  const expanded=expandedHistoryDays.has(key),visible=expanded?goals:goals.slice(0,2);
+  const items=visible.map(t=>`<div class="cal-item"><strong>${esc(t.subject)}</strong>${esc(t.topic)}<div class="cal-status">${t.done?'✓ Meta concluída':'↪ Tópico não finalizado'}</div>${t.seconds?`<div>${studyLabel(t.seconds)}</div>`:''}</div>`).join('');
+  const remaining=goals.length-2;
+  const more=remaining>0?`<button type="button" class="cal-expand" onclick="event.stopPropagation();toggleHistoryExpansion('${key}')">${expanded?'− Recolher tópicos':`+ ${remaining} tópico(s) · Ver todos`}</button>`:'';
+  cells.push(`<div role="button" tabindex="0" class="cal-day ${expanded?'expanded':''} ${key===todayKey()?'today':''} ${historyView.selected===key?'selected':''}" onclick="selectHistoryDay('${key}')" onkeydown="if(event.key==='Enter'&&event.target===this)selectHistoryDay('${key}')"><span class="cal-num">${d}</span>${status?.complete?'<span class="cal-done">★ Todas as metas!</span>':''}${items}${more}${goals.length&&sec?`<span class="cal-total">Total estudado: ${studyLabel(sec)}</span>`:''}</div>`)
+ }
+ document.getElementById('historyCalendar').innerHTML=`<div class="cal-grid">${cells.join('')}</div>`;
+ const key=historyView.selected&&historyView.selected.startsWith(prefix)?historyView.selected:null;
+ if(key){const goals=recordedGoals(key),status=dayGoalStatus(key),seconds=historyTotalForDay(key);document.getElementById('historyDayDetails').innerHTML=`<div class="cal-detail"><h3>${new Date(key+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}</h3><p><strong>Tempo total registrado: ${studyLabel(seconds)}</strong>${status?.complete?' · ★ Todas as metas concluídas':''}</p>${goals.length?goals.map(t=>`<div class="task"><strong>${esc(t.subject)}</strong><div>${esc(t.topic)}</div><div class="mini">${t.done?'✓ Meta concluída':'↪ Tópico não finalizado'} · Tempo registrado nesta meta: ${studyLabel(t.seconds)}</div></div>`).join(''):'<p class="muted">Nenhuma meta concluída ou marcada como tópico não finalizado neste dia.</p>'}</div>`}else document.getElementById('historyDayDetails').innerHTML='<p class="cal-note">Selecione um dia para ver as metas concluídas ou marcadas como tópico não finalizado.</p>';
+ // O registro mensal parte das metas efetivamente marcadas no cronograma,
+ // inclusive aquelas sem nenhuma sessão de cronômetro.
+ const grouped=new Map();
+ for(const key of [...datesInMonth].sort()){
+  for(const goal of recordedGoals(key)){
+   if(!grouped.has(goal.subject))grouped.set(goal.subject,{seconds:0,topics:new Map()});
+   const group=grouped.get(goal.subject);
+   const seconds=Number(goal.seconds||0);
+   group.seconds+=seconds;
+   const topicKey=goal.topic;
+   if(!group.topics.has(topicKey))group.topics.set(topicKey,{seconds:0,done:0,unfinished:0,dates:new Set()});
+   const topic=group.topics.get(topicKey);
+   topic.seconds+=seconds;
+   if(goal.done)topic.done++;else if(goal.unfinished)topic.unfinished++;
+   topic.dates.add(key);
+  }
+ }
+ document.getElementById('historyList').innerHTML=grouped.size?
+  [...grouped.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([name,g])=>
+   `<div class="month-subject"><div class="row between wrap"><h3>${esc(name)}</h3><strong>${studyLabel(g.seconds)}</strong></div>${[...g.topics.entries()].map(([topic,info])=>
+    `<div class="month-topic"><div>${esc(topic)}</div><div class="mini">${info.done?'✓ '+info.done+' meta(s) concluída(s)':''}${info.done&&info.unfinished?' · ':''}${info.unfinished?'↪ '+info.unfinished+' tópico(s) não finalizado(s)':''} · Tempo estudado: ${studyLabel(info.seconds)}</div></div>`).join('')}</div>`).join(''):
+  '<div class="empty">Nenhuma meta concluída ou tópico não finalizado neste mês.</div>';
+
+}
+
+async function generate(){if(timer.running)pauseTimer();const pool=subjects().map(s=>({...s,topics:parseTopics(s.syllabus),credit:0,index:0}));if(!pool.length){showMessage('Cadastre matérias e tópicos primeiro.');go('materias');return}let active=state.studyDays.map((on,i)=>on?i:-1).filter(i=>i>=0);if(!active.length){showMessage('Configure os dias de estudo.');go('tempo');return}if(state.tasks.length&&!await askConfirm('Regerar substituirá as metas atuais deste ciclo (o histórico registrado será mantido). Continuar?'))return;const chosenCycleName=await cycleNameDialog(activeCycle()?.name||'','Nome obrigatório do cronograma');if(!chosenCycleName)return;if(!activeCycle()){const id='cycle-'+Date.now()+'-'+Math.floor(Math.random()*100000);cycleStore.items.push({id,name:chosenCycleName,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),data:cloneData(state)});cycleStore.activeId=id}else activeCycle().name=chosenCycleName;persistCycleStore();
+let tasks=[],base=Date.now(),totalWeight=pool.reduce((n,s)=>n+Math.max(1,Math.min(5,Number(s.weight)||1)),0),totalMinutes=Math.round(state.weeklyHours*60),baseDaily=Math.floor(totalMinutes/active.length),extra=totalMinutes%active.length;let lastSubject=null;
+active.forEach((day,di)=>{let daily=baseDaily+(di<extra?1:0),count=Math.min(state.sessionMinutes,pool.length,daily),chosen=[];for(let j=0;j<count;j++){pool.forEach(s=>s.credit+=Math.max(1,Math.min(5,Number(s.weight)||1))/totalWeight*daily/count);let ranked=pool.filter(s=>!chosen.includes(s.id)).sort((a,b)=>(b.credit-(b.id===lastSubject?10:0))-(a.credit-(a.id===lastSubject?10:0)));let sub=ranked[0];chosen.push(sub.id);lastSubject=sub.id;sub.credit-=daily/count;let duration=Math.floor(daily/count)+(j<daily%count?1:0),topic=sub.topics[sub.index%sub.topics.length];sub.index++;tasks.push({id:base+tasks.length,day,subjectId:sub.id,subject:sub.name,topic:topic.number+' '+topic.title,minutes:duration,done:false,unfinished:false,seconds:0,topicIndex:sub.index-1})}});
+state.tasks=tasks;state.weekTasks??={};state.planWeekStart=weekKey(0);scheduleWeekOffset=0;state.tasks.forEach((t,i)=>{t.order=i;t.baseTopicIndex=t.topicIndex});syncTopics();state.tasks.forEach(t=>t.planDate=canonicalTaskDate(t,0));save();go('cronograma')}
+function topicList(subjectId){let s=state.subjects.find(x=>x.id===subjectId);return s?parseTopics(s.syllabus):[]}
+function syncTopics(){
+  // Uma fila por disciplina. Cada tópico antecipado ocupa imediatamente sua
+  // posição na fila, mesmo antes de ser concluído. Removê-lo libera a posição.
+  for(const s of state.subjects){
+    const topics=topicList(s.id), items=state.tasks.filter(t=>t.subjectId===s.id);
+    if(!topics.length||!items.length)continue;
+    const ordered=[...items].sort((a,b)=>a.day-b.day||((a.order??a.id)-(b.order??b.id)));
+    const first=ordered.find(t=>!t.extra)||ordered[0];
+    let cursor=Math.max(0,Number(first.baseTopicIndex??first.topicIndex??0));
+    let pendingIndex=null;
+    for(const t of ordered){
+      // Uma revisão explicitamente escolhida é uma meta real, sem consumir
+      // novamente a sequência de tópicos novos das próximas sessões.
+      if(t.review && topics.length){
+        const reviewIndex=Math.max(0,Math.min(topics.length-1,Number(t.reviewTopicIndex)||0));
+        t.topicIndex=reviewIndex;
+        t.topic='Revisão — '+topics[reviewIndex].number+' '+topics[reviewIndex].title;
+        t.exhausted=false;
+        t.carryover=false;
+        continue;
+      }
+      // Tópicos concluídos são fixados, para não alterar o histórico do aluno.
+      if(t.done && Number.isInteger(t.completedTopicIndex)){
+        t.topicIndex=t.completedTopicIndex;
+        t.topic=topics[t.topicIndex]?.number+' '+topics[t.topicIndex]?.title || t.topic;
+        cursor=Math.max(cursor,t.topicIndex+1);
+        pendingIndex=null;
+        t.carryover=false;
+        continue;
+      }
+      const ix=pendingIndex!==null?pendingIndex:cursor;
+      if(ix>=topics.length){
+        t.topicIndex=ix;t.topic='Conteúdo programático concluído — sem novo tópico';
+        t.exhausted=true;t.carryover=false;continue;
+      }
+      t.exhausted=false;
+      t.topicIndex=ix;t.topic=topics[ix].number+' '+topics[ix].title;
+      t.carryover=pendingIndex!==null;
+      if(t.unfinished){pendingIndex=ix;cursor=Math.max(cursor,ix+1)}
+      else {pendingIndex=null;cursor=Math.max(cursor,ix+1)}
+    }
+  }
+}
+function reviewLastTopic(id){
+  const t=state.tasks.find(x=>x.id===id);
+  if(!t||!t.exhausted)return;
+  const topics=topicList(t.subjectId);
+  if(!topics.length){showMessage('Cadastre ao menos um tópico nesta matéria.');go('materias');return;}
+  t.review=true;
+  t.reviewTopicIndex=topics.length-1;
+  t.exhausted=false;
+  syncTopics();save();render();
+}
+function editExhaustedSubject(id){
+  const t=state.tasks.find(x=>x.id===id);
+  if(!t)return;
+  go('materias');
+  const el=document.getElementById('syllabus-'+t.subjectId);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus();}
+  showMessage('Adicione novos tópicos à matéria '+t.subject+' e salve o conteúdo programático.');
+}
+function nextTopic(t){const topics=topicList(t.subjectId);let ix=Number(t.topicIndex)+1;return ix<topics.length?{index:ix,topic:topics[ix].number+' '+topics[ix].title}:null}
+function pullNext(id){
+  let t=state.tasks.find(x=>x.id===id);if(!t||!t.done){showMessage('Conclua o tópico atual antes de avançar.');return}
+  syncTopics();let nxt=nextTopic(t);if(!nxt){showMessage('Você chegou ao último tópico cadastrado desta matéria.');return}
+  let existing=state.tasks.find(x=>x.extra&&x.day===t.day&&x.subjectId===t.subjectId&&!x.done);
+  if(existing){showMessage('Já existe um tópico adicional pendente nesta matéria hoje. Conclua-o ou remova-o antes de puxar outro.');return}
+  let newTask={id:Date.now()+Math.floor(Math.random()*100000),day:t.day,planDate:t.planDate||canonicalTaskDate(t,0),subjectId:t.subjectId,subject:t.subject,topic:nxt.topic,topicIndex:nxt.index,minutes:Math.max(0,t.minutes-Math.round(totalStudy(null,null,t.id)/60)),seconds:0,done:false,unfinished:false,extra:true,order:(t.order??t.id)+0.01};
+  const pos=state.tasks.indexOf(t);state.tasks.splice(pos+1,0,newTask);state.tasks.forEach((x,i)=>x.order=i);syncTopics();save();render();
+}
+async function removePulled(id){
+  const t=state.tasks.find(x=>x.id===id);if(!t||!t.extra||t.done)return;
+  if(totalStudy(null,null,t.id)>0&&!await askConfirm('Este tópico tem tempo registrado. Removê-lo do dia manterá o histórico de estudos, mas retirará a tarefa. Continuar?'))return;
+  if(timer.id===id){pauseTimer();timer.id=null;timer.seconds=0;updateClock()}
+  state.tasks=state.tasks.filter(x=>x.id!==id);state.tasks.forEach((x,i)=>x.order=i);syncTopics();save();render();
+}
+function markDone(id){let t=state.tasks.find(x=>x.id===id);if(!t||t.exhausted)return;t.planDate??=canonicalTaskDate(t,0);t.unfinished=false;t.done=true;t.completedTopicIndex=t.topicIndex;logEvent('Concluído',t);syncTopics();save();render()}
+function undoDone(id){let t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=false;delete t.completedTopicIndex;state.history=state.history.filter(x=>!(x.type==='Concluído'&&x.taskId===t.id));syncTopics();save();render()}
+function undoUnfinished(id){let t=state.tasks.find(x=>x.id===id);if(!t)return;t.unfinished=false;syncTopics();save();render()}
+function markUnfinished(id){let t=state.tasks.find(x=>x.id===id);if(!t)return;t.planDate??=canonicalTaskDate(t,0);t.done=false;delete t.completedTopicIndex;t.unfinished=true;syncTopics();save();render()}
+function selectTimer(id){if(timer.running)pauseTimer();const t=state.tasks.find(t=>t.id===id);if(!t)return;timer.id=id;timer.seconds=0;timer.started=0;timer.running=false;go('inicio');updateClock();document.getElementById('startBtn').textContent='▶ Iniciar'}
+function toggleTimer(){if(timer.running){pauseTimer();return}if(timer.id===null||!state.tasks.some(t=>t.id===timer.id)){showMessage('Selecione uma meta primeiro.');return}timer.running=true;timer.started=Date.now();document.getElementById('startBtn').textContent='⏸ Pausar';updateClock()}
+function elapsedTimer(){return timer.seconds+(timer.running?Math.max(0,Math.floor((Date.now()-timer.started)/1000)):0)}
+function updateClock(){document.getElementById('clock').textContent=hhmm(elapsedTimer())}
+function pauseTimer(){if(!timer.running)return;timer.seconds=elapsedTimer();timer.running=false;timer.started=0;document.getElementById('startBtn').textContent='▶ Continuar';updateClock()}
+function resetTimer(){pauseTimer();timer.seconds=0;timer.started=0;document.getElementById('startBtn').textContent='▶ Iniciar';updateClock()}
+function finishStudy(){if(timer.id===null){showMessage('Selecione uma meta para registrar o estudo.');return}pauseTimer();const t=state.tasks.find(x=>x.id===timer.id);if(!t)return;if(timer.seconds<=0){showMessage('Inicie o cronômetro antes de concluir o estudo.');return}t.planDate??=canonicalTaskDate(t,0);t.seconds=(t.seconds||0)+timer.seconds;logEvent("Estudo",t,timer.seconds);timer.seconds=0;timer.id=null;timer.started=0;document.getElementById('startBtn').textContent='▶ Iniciar';save();render();updateClock();showMessage('Tempo registrado! Você pode marcar a meta como concluída ou retomá-la depois.')}
+setInterval(updateClock,250);
+window.addEventListener('pagehide',()=>{if(timer.running)pauseTimer()});
+function taskMarkup(t,compact=false){let status=t.done?'Concluída':t.unfinished?'Tópico não finalizado':t.carryover?'Continuação do tópico':'Pendente';let buttons=t.exhausted?`<button class="btn small alt" onclick="editExhaustedSubject(${t.id})">＋ Adicionar tópicos à matéria</button><button class="btn small" onclick="reviewLastTopic(${t.id})">↻ Revisar último tópico</button>`:t.done?`<button class="btn small alt" onclick="undoDone(${t.id})">↶ Desmarcar conclusão</button><button class="btn small" onclick="pullNext(${t.id})">＋ Próximo tópico da matéria</button>`:`<button class="btn small alt" onclick="selectTimer(${t.id})">${totalStudy(null,null,t.id)?'▶ Retomar estudos':'⏱ Iniciar estudo'}</button><button class="btn small" onclick="markDone(${t.id})">✓ Meta realizada</button>${t.unfinished?`<button class="btn small alt" onclick="undoUnfinished(${t.id})">↶ Desmarcar tópico não finalizado</button>`:`<button class="btn small warn" onclick="markUnfinished(${t.id})">↪ Tópico não finalizado</button>`}`;if(t.extra&&!t.done)buttons+=`<button class="btn small danger" onclick="removePulled(${t.id})">✕ Remover tópico do dia</button>`;return `<div class="task ${t.done?'completed':t.unfinished?'pending':''}"><div class="row between wrap"><span class="subj">${esc(t.subject)}</span><span class="chip">${esc(status)}</span></div><div class="topicname">${esc(t.topic)}</div><div class="mini">Meta: estudar ${t.minutes} minutos · Tempo estudado: <strong>${studyLabel(totalStudy(null,null,t.id))}</strong></div>${compact?'':`<div class="task-actions">${buttons}</div>`}</div>`}
+function renderDashboard(){const today=(new Date().getDay()+6)%7,todayTasks=state.tasks.filter(t=>t.day===today),done=state.tasks.filter(t=>t.done),todayDone=todayTasks.filter(t=>t.done),sum=state.tasks.reduce((n,t)=>n+t.minutes,0);document.getElementById('todayName').textContent=weekdays[today];document.getElementById('todayDate').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});document.getElementById('cards').innerHTML=[['Metas concluídas na semana',done.length+' / '+state.tasks.length],['Tempo planejado na semana',fmt(sum*60)],['Estudado hoje',studyLabel(historyTotalForDay(todayKey()))],['Cumprimento',state.tasks.length?Math.round(done.length/state.tasks.length*100)+'%':'0%']].map(x=>`<div class="card"><span class="muted">${x[0]}</span><div class="stat">${x[1]}</div></div>`).join('');document.getElementById('todaySummary').innerHTML=`<div class="summary"><strong>Meta diária: ${todayTasks.length} ${todayTasks.length===1?'tópico':'tópicos'} · ${fmt(todayTasks.reduce((n,t)=>n+t.minutes,0)*60)}</strong><div class="mini" style="margin:8px 0">${todayDone.length} de ${todayTasks.length} metas concluídas</div><div class="progress"><div style="width:${todayTasks.length?100*todayDone.length/todayTasks.length:0}%"></div></div></div>`;document.getElementById('todayTasks').innerHTML=todayTasks.length?todayTasks.map(t=>taskMarkup(t)).join(''):'<div class="empty">Sem metas para hoje. Gere seu cronograma na aba Cronograma.</div>';let target=state.tasks.find(t=>t.id===timer.id);document.getElementById('timerTarget').textContent=target?target.subject+' — '+target.topic:'Nenhuma meta selecionada'}function renderSchedule(){document.getElementById('prevWeekButton').disabled=scheduleWeekOffset<=-1;document.getElementById('nextWeekButton').disabled=scheduleWeekOffset>=1;const tasks=tasksForWeek(),start=weekStart(scheduleWeekOffset),end=new Date(start);end.setDate(end.getDate()+6);document.getElementById('scheduleWeekTitle').textContent=`${prettyDate(localDay(start.toISOString()))} a ${prettyDate(localDay(end.toISOString()))}${scheduleWeekOffset===0?' · Semana atual':scheduleWeekOffset===1?' · Prévia da próxima semana':' · Semana anterior'}`;document.getElementById('week').innerHTML=tasks.length?'<div class="week">'+weekdays.map((d,i)=>`<div class="day"><b>${abbreviations[i]}</b><div class="schedule-date">${prettyDate(dateAtWeek(scheduleWeekOffset,i))}</div><div class="mini">${fmt(tasks.filter(t=>t.day===i).reduce((n,t)=>n+t.minutes,0)*60)}</div>${tasks.filter(t=>t.day===i).map(t=>taskMarkup(t,true)).join('')||'<p class="mini">Descanso</p>'}</div>`).join('')+'</div>':'<div class="empty">Clique em Gerar / recalcular para criar seu cronograma.</div>';document.getElementById('fullSchedule').innerHTML=weekdays.map((d,i)=>{let ts=tasks.filter(t=>t.day===i);return `<div class="day-row"><h3>${d} · ${prettyDate(dateAtWeek(scheduleWeekOffset,i))} · ${ts.length} metas · ${fmt(ts.reduce((n,t)=>n+t.minutes,0)*60)}</h3>${ts.map(t=>taskMarkup(t,scheduleWeekOffset!==0)).join('')||'<p class="mini">Dia sem estudos</p>'}</div>`}).join('')}
+function renderCharts(){let tasks=state.tasks,done=tasks.filter(t=>t.done),seconds=confirmedHistoryEntries().reduce((n,e)=>n+Number(e.seconds||0),0);document.getElementById('chartCards').innerHTML=[['Metas realizadas',done.length],['Tempo cronometrado',studyLabel(seconds)],['Taxa de conclusão',tasks.length?Math.round(done.length/tasks.length*100)+'%':'0%']].map(x=>`<div class="card"><span class="muted">${x[0]}</span><div class="stat">${x[1]}</div></div>`).join('');let days=Array.from({length:7},(_,i)=>{let d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-6+i);return {key:localDay(d.toISOString()),name:d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'}),date:d}});const bar=(name,pct,label,tooltip='')=>`<div class="barrow" title="${esc(tooltip||label)}"><div class="row between"><strong style="font-size:13px">${esc(name)}</strong><span class="mini">${esc(label)}</span></div><div class="progress"><div style="width:${Math.min(100,Math.max(0,pct))}%"></div></div></div>`;let perDay=days.map(d=>({...d,seconds:historyTotalForDay(d.key)})),max=Math.max(1,...perDay.map(x=>x.seconds));document.getElementById('dailyChart').innerHTML='<p class="mini">Passe o mouse sobre as barras para ver o tempo de cada matéria no dia. Sessões retomadas são somadas.</p>'+perDay.map(x=>{let bySubject=[...new Set(confirmedHistoryEntries().filter(e=>e.historyDay===x.key).map(e=>e.subject))].map(name=>`${name}: ${studyLabel(confirmedHistoryEntries().filter(e=>e.historyDay===x.key&&e.subject===name).reduce((n,e)=>n+Number(e.seconds||0),0))}`);return bar(x.name,x.seconds/max*100,studyLabel(x.seconds),`${x.date.toLocaleDateString('pt-BR')} — total: ${studyLabel(x.seconds)}\n${bySubject.join('\n')||'Nenhum estudo registrado'}`)}).join('');document.getElementById('subjectChart').innerHTML=state.subjects.map(s=>{let all=tasks.filter(t=>t.subjectId===s.id),d=all.filter(t=>t.done).length;return bar(s.name,all.length?d/all.length*100:0,d+' / '+all.length+' metas')}).join('');let sums=state.subjects.map(s=>({name:s.name,value:confirmedHistoryEntries().filter(e=>e.subject===s.name).reduce((n,e)=>n+Number(e.seconds||0),0)})),maxS=Math.max(1,...sums.map(x=>x.value));document.getElementById('timeChart').innerHTML=sums.map(s=>bar(s.name,s.value/maxS*100,studyLabel(s.value),`${s.name}: ${studyLabel(s.value)} no histórico`)).join('')}function render(){if(state.planWeekStart!==weekKey(0)){rolloverWeek();syncTopics();save()}renderSubjects();renderTime();renderDashboard();renderSchedule();renderCharts();renderHistory();renderCycles()}rolloverWeek();syncTopics();save();render();
+</script></body></html>
